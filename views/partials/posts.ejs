@@ -3,15 +3,14 @@
 		<span><%= message.message %></span>
 	</div>
 	<div>
-		<% if (user.ismember != false) { %>
-		    <p><%= message.author %></p>
-		<% } else { %>
-		    <p>Anonymous</p>
-		<% } %>
+        <% if(user === undefined || user.ismember != true) { %>
+            <p>Anonymous</p>
+       <% } else { %>
+            <p><%= message.author %></p>
+            <p><%= message.date_created %></p>
+       <% } %>
 
-		<span> <%= message.date_created %></span>
-
-		<% if (user.isadmin != false){ %>
+		<% if (user != undefined && user.isadmin != false){ %>
 		<form
 			action="/delete/<%= message.id %>"
 			method="POST"

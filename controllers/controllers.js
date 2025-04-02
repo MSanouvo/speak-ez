@@ -5,9 +5,14 @@ const pool = require("../database/pool");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+require("dotenv").config()
 
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 15 characters. (not decided yet)";
+
+const MEMBER = process.env.MEMBER_PASSPHRASE
+const ADMIN = process.env.ADMIN_PASSPHRASE
+
 
 const validateUser = [
 	body("first_name").trim().isAlpha().withMessage(`First name ${alphaErr}`),
@@ -25,17 +30,20 @@ const validateUser = [
 
 const validatePassphrase = [
 	body("passphrase")
-		.custom((value, { req }) => {
-			return value === "secret";
+		.custom((value) => {
+            if(value === MEMBER || value === ADMIN){
+                return value
+            }
 		})
-		.withMessage("Wrong passphrase !"),
+        .withMessage("Passphrase is incorrect!")
 ];
 
 const validateMessage = [
-    body("message").trim()
-        .isLength({ min: 1, max: 255 })
-        .withMessage("Please enter a message that is below 255 characters.")
-]
+	body("message")
+		.trim()
+		.isLength({ min: 1, max: 255 })
+		.withMessage("Please enter a message that is below 255 characters."),
+];
 
 passport.use(
 	new LocalStrategy(async (username, password, done) => {
@@ -77,15 +85,15 @@ passport.deserializeUser(async (id, done) => {
 	}
 });
 
-function getSlashPage(req, res) {
+function getLogInPage(req, res) {
 	res.render(
-		"index",
+		"login",
 		{
 			title: "Speak-Ez",
-			subTitle: "Log In",
-			messages: req.session.messages,
+			subTitle: "Message Board",
+			messages: req.session.messages
 		},
-		(req.session.messages = undefined)
+		req.session.messages = undefined
 	);
 }
 
@@ -93,21 +101,6 @@ function getSignUp(req, res) {
 	res.render("sign-up", { title: "Speak-Ez", subTitle: "Sign Up" });
 }
 
-// async function postSignUp(req, res, next) {
-//     try{
-//         console.log(req.body)
-//         const hashedPassword = await bcrypt.hash(req.body.password, 10)
-//         await query.addUser(req.body.first_name, req.body.last_name, req.body.username, hashedPassword)
-//         if(req.body.admin === 'on'){
-//             const user = await query.getLatestUser()
-//             console.log(user)
-//             await query.makeAdmin(user.id)
-//         }
-//         res.redirect("/passphrase")
-//     } catch(err) {
-//         return next(err)
-//     }
-// }
 
 const postSignUp = [
 	validateUser,
@@ -130,13 +123,7 @@ const postSignUp = [
 				req.body.username,
 				hashedPassword
 			);
-			if (req.body.admin === "on") {
-				const user = await query.getLatestUser();
-				console.log(user);
-				await query.makeAdmin(user.id);
-			}
-			// res.redirect("/passphrase")
-			res.redirect("/");
+			res.redirect("/login")
 		} catch (err) {
 			return next(err);
 		}
@@ -145,7 +132,7 @@ const postSignUp = [
 
 const login = [
 	passport.authenticate("local", {
-		failureRedirect: "/",
+		failureRedirect: "/login",
 		failureMessage: true,
 	}),
 	function (req, res) {
@@ -154,12 +141,9 @@ const login = [
 ];
 
 function getPassphrase(req, res) {
-	//check for user, if user is already memeber, redirect to message board
-	//if user is not a member, render passphrase page to enter password
-	//add option to skip passphrase and go to message board as non member
 	console.log(req.user);
 	if (req.user.ismember === true) {
-		res.redirect("/messages");
+		res.redirect("/");
 	} else {
 		res.render("passphrase", {
 			title: "Speak Ez",
@@ -172,6 +156,7 @@ const postPassphrase = [
 	validatePassphrase,
 	async function (req, res, next) {
 		const errors = validationResult(req);
+        // console.log(req.body.passphrase)
 		if (!errors.isEmpty()) {
 			return res.status(400).render("passphrase", {
 				title: "Speak-Ez",
@@ -180,9 +165,14 @@ const postPassphrase = [
 			});
 		}
 		try {
-			console.log(req.user.id);
-			await query.makeMember(req.user.id);
-			res.redirect("/messages");
+            if(req.body.passphrase === MEMBER){
+                await query.makeMember(req.user.id);
+            }
+            if(req.body.passphrase === ADMIN){
+                await query.makeMember(req.user.id)
+                await query.makeAdmin(req.user.id)
+            }
+			res.redirect("/");
 		} catch (error) {
 			return next(error);
 		}
@@ -190,17 +180,13 @@ const postPassphrase = [
 ];
 
 async function getMessages(req, res) {
-	if (req.user) {
-		const messages = await query.getAllMessages();
-		res.render("message-board", {
-			title: "Speak-Ez",
-			subTitle: "Messages",
-			messages: messages,
-			user: req.user,
-		});
-	} else {
-        res.redirect("/")
-    }
+	const messages = await query.getAllMessages();
+	res.render("message-board", {
+		title: "Speak-Ez",
+		subTitle: "Messages",
+		messages: messages,
+		user: req.user,
+	});
 }
 
 function logout(req, res) {
@@ -215,21 +201,21 @@ function logout(req, res) {
 async function deleteMessage(req, res) {
 	const message = req.params;
 	console.log(message);
-	await query.deleteMessage(message.id)
-	res.redirect("/messages")
+	await query.deleteMessage(message.id);
+	res.redirect("/");
 }
 
 function addPostGet(req, res) {
-    res.render("add-post", {
-        title: "Speak-Ez",
-        subTitle: "Add Post"
-    })
+	res.render("add-post", {
+		title: "Speak-Ez",
+		subTitle: "Add Post",
+	});
 }
 
 const addPost = [
-    validateMessage,
-    async function(req, res, next) {
-        const errors = validationResult(req);
+	validateMessage,
+	async function (req, res, next) {
+		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
 			return res.status(400).render("add-post", {
 				title: "Speak-Ez",
@@ -238,18 +224,18 @@ const addPost = [
 			});
 		}
 		try {
-            console.log(req.body.message)
-            console.log(req.user.username)
-            await query.addMessage(req.body.message, req.user.username)
-			res.redirect("/messages");
+			// console.log(req.body.message);
+			// console.log(req.user.username);
+			await query.addMessage(req.body.message, req.user.username);
+			res.redirect("/");
 		} catch (error) {
 			return next(error);
 		}
-    }
-]
+	},
+];
 
 module.exports = {
-	getSlashPage,
+	getLogInPage,
 	getSignUp,
 	passport,
 	postSignUp,
@@ -259,6 +245,6 @@ module.exports = {
 	getMessages,
 	logout,
 	deleteMessage,
-    addPostGet,
-    addPost
+	addPostGet,
+	addPost,
 };
