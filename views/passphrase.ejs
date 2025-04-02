@@ -7,6 +7,11 @@
 </head>
 <body>
     <h1><%= title %></h1>
-    <p>Enter Passphrase</p>
+    <%- include("partials/errors.ejs") %>
+    <form action="/passphrase" method="POST">
+        <label for="passphrase">What's the passphrase ?</label>
+        <input type="password" name="passphrase" id="passphrase" required>
+        <button type="submit">Enter</button>
+    </form>
 </body>
 </html>

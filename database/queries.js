@@ -13,8 +13,8 @@ async function addUser(first_name, last_name, username, password) {
 	await pool.query("INSERT INTO Users (first_name, last_name, username, password) VALUES($1, $2, $3, $4)", [first_name, last_name, username, password]);
 }
 
-async function makeMember(username){
-	await pool.query("UPDATE Users SET ismember = true WHERE username = $1", [username])
+async function makeMember(id){
+	await pool.query("UPDATE Users SET ismember = true WHERE id = $1", [id])
 }
 
 async function makeAdmin(id){
@@ -25,7 +25,7 @@ async function deleteMessage(id){
 	await pool.query("DELETE FROM Messages WHERE id = $1", [id])
 }
 
-async function getLatestUser(username){
+async function getLatestUser(){
     const { rows } = await pool.query("SELECT * FROM users ORDER BY id DESC");
     return rows[0]
 }
