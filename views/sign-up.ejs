@@ -7,7 +7,7 @@
 			content="width=device-width, initial-scale=1.0"
 		/>
 		<title><%= subTitle %></title>
-        <link
+		<link
 			rel="stylesheet"
 			href="/styles.css"
 		/>
@@ -15,6 +15,7 @@
 	<body>
 		<h1><%= title %></h1>
 		<h2><%= subTitle %></h2>
+		<%- include("partials/errors.ejs") %>
 		<form
 			action="/sign-up"
 			method="POST"
@@ -57,8 +58,12 @@
 				type="password"
 				required
 			/>
-            <label for="admin">Are you an Admin ?</label>
-            <input type="checkbox" id="admin" name="admin">
+			<label for="admin">Are you an Admin ?</label>
+			<input
+				type="checkbox"
+				id="admin"
+				name="admin"
+			/>
 			<button type="submit">Sign Up</button>
 			<p>Already have an account? <a href="/">Log in.</a></p>
 		</form>
