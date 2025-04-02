@@ -31,6 +31,12 @@ const validatePassphrase = [
 		.withMessage("Wrong passphrase !"),
 ];
 
+const validateMessage = [
+    body("message").trim()
+        .isLength({ min: 1, max: 255 })
+        .withMessage("Please enter a message that is below 255 characters.")
+]
+
 passport.use(
 	new LocalStrategy(async (username, password, done) => {
 		try {
@@ -209,9 +215,38 @@ function logout(req, res) {
 async function deleteMessage(req, res) {
 	const message = req.params;
 	console.log(message);
-	// await query.deleteMessage(kit.id)
+	await query.deleteMessage(message.id)
 	res.redirect("/messages")
 }
+
+function addPostGet(req, res) {
+    res.render("add-post", {
+        title: "Speak-Ez",
+        subTitle: "Add Post"
+    })
+}
+
+const addPost = [
+    validateMessage,
+    async function(req, res, next) {
+        const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).render("add-post", {
+				title: "Speak-Ez",
+				subTitle: "Add Post",
+				errors: errors.array(),
+			});
+		}
+		try {
+            console.log(req.body.message)
+            console.log(req.user.username)
+            await query.addMessage(req.body.message, req.user.username)
+			res.redirect("/messages");
+		} catch (error) {
+			return next(error);
+		}
+    }
+]
 
 module.exports = {
 	getSlashPage,
@@ -224,4 +259,6 @@ module.exports = {
 	getMessages,
 	logout,
 	deleteMessage,
+    addPostGet,
+    addPost
 };

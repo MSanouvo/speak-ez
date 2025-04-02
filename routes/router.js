@@ -12,5 +12,7 @@ router.post("/passphrase", controller.postPassphrase)
 router.get("/messages", controller.getMessages)
 router.get("/logout", controller.logout)
 router.post("/delete/:id", controller.deleteMessage)
+router.get("/add", controller.addPostGet)
+router.post("/add", controller.addPost)
 
 module.exports = router

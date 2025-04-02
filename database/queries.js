@@ -5,8 +5,8 @@ async function getAllMessages() {
 	return rows
 }
 
-async function addMessage(message, username, date) {
-	await pool.query("INSERT INTO Messages (message, username, date) VALUES($1, $2, $3)", [message, username, date])
+async function addMessage(message, username) {
+	await pool.query("INSERT INTO Messages (message, author) VALUES($1, $2)", [message, username])
 }
 
 async function addUser(first_name, last_name, username, password) {
