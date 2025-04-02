@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title><%= subTitle %></title>
+        <link
+			rel="stylesheet"
+			href="/styles.css"
+		/>
+	</head>
+	<body>
+		<h1><%= title %></h1>
+		<h2><%= subTitle %></h2>
+		<form
+			action="/sign-up"
+			method="POST"
+		>
+			<label for="first_name">First Name:</label>
+			<input
+				id="first_name"
+				name="first_name"
+				placeholder="Barry"
+				type="text"
+				required
+			/>
+			<label for="last_name">Last Name:</label>
+			<input
+				id="last_name"
+				name="last_name"
+				placeholder="Allen"
+				type="text"
+				required
+			/>
+			<label for="username">Username</label>
+			<input
+				id="username"
+				name="username"
+				placeholder="username"
+				type="text"
+				required
+			/>
+			<label for="password">Password</label>
+			<input
+				id="password"
+				name="password"
+				type="password"
+				required
+			/>
+			<label for="confirm">Confirm Password</label>
+			<input
+				id="confirm"
+				name="confirm"
+				type="password"
+				required
+			/>
+            <label for="admin">Are you an Admin ?</label>
+            <input type="checkbox" id="admin" name="admin">
+			<button type="submit">Sign Up</button>
+			<p>Already have an account? <a href="/">Log in.</a></p>
+		</form>
+	</body>
+</html>

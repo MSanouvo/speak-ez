@@ -1,7 +1,9 @@
 const express = require("express")
 const path = require("node:path")
-//Name can change if needed
-const index = require("./routes/index")
+const session = require("express-session")
+const passport = require("passport")
+const LocalStrategy = require("passport-local").Strategy
+const index = require("./routes/router")
 
 const app = express()
 const PORT = process.eventNames.PORT || 3000
@@ -9,6 +11,10 @@ const PORT = process.eventNames.PORT || 3000
 app.use(express.urlencoded({ exntended: true }))
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs")
+
+app.use(session({ secret: "secret", resave: false, saveUninitialized: false }))
+app.use(passport.session())
+app.use(express.urlencoded({ extended: false }))
 
 //For CSS
 const assetsPath = path.join(__dirname, "styles")
