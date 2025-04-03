@@ -57,7 +57,7 @@ nav{
 }
 
 .container-body{
-    height: 100%;
+    max-height: 73vh;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -70,7 +70,7 @@ nav{
     /* outline: 1px solid red; */
     padding: 0;
     overflow-y: scroll;
-    max-height: 80%;
+    max-height: 100%;
     padding: 5px;
 }
 
@@ -131,7 +131,7 @@ nav{
     /* add svg for this */
 }
 
-form>label{
+.add>label{
     font-size: 1.2rem;
     font-weight: bold;
 }
@@ -142,11 +142,20 @@ textarea{
     padding: 5px 10px;
 }
 
-p, form{
+p, form, ul, h2{
     padding: 0;
     margin: 0;
 }
 
 ul{
     list-style: none;
+}
+
+.message-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.placeholder{
+    color: transparent;
 }

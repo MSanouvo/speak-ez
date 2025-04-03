@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/onboard.css">
     <title><%= subTitle %></title>
 </head>
 <body>
     <%- include('partials/navbar.ejs', { title: title}) %>
-    <%- include("partials/errors.ejs") %>
+    
     <form action="/passphrase" method="POST">
         <label for="passphrase">What's the passphrase ?</label>
-        <input type="password" name="passphrase" id="passphrase" required>
-        <button type="submit">Enter</button>
+        <%- include("partials/errors.ejs") %>
+        <input type="password" name="passphrase" id="passphrase" placeholder="Passphrase" required>
+        <button class="buttons" type="submit">Enter</button>
     </form>
-    <a href="/"><button> I don't want to be a member. </button></a>
+    <a class="skip" href="/"><button class="buttons"> I don't want to be a member. </button></a>
 </body>
 </html>

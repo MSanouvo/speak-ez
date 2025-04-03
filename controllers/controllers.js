@@ -5,14 +5,13 @@ const pool = require("../database/pool");
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-require("dotenv").config()
+require("dotenv").config();
 
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 15 characters. (not decided yet)";
 
-const MEMBER = process.env.MEMBER_PASSPHRASE
-const ADMIN = process.env.ADMIN_PASSPHRASE
-
+const MEMBER = process.env.MEMBER_PASSPHRASE;
+const ADMIN = process.env.ADMIN_PASSPHRASE;
 
 const validateUser = [
 	body("first_name").trim().isAlpha().withMessage(`First name ${alphaErr}`),
@@ -31,11 +30,11 @@ const validateUser = [
 const validatePassphrase = [
 	body("passphrase")
 		.custom((value) => {
-            if(value === MEMBER || value === ADMIN){
-                return value
-            }
+			if (value === MEMBER || value === ADMIN) {
+				return value;
+			}
 		})
-        .withMessage("Passphrase is incorrect!")
+		.withMessage("Passphrase is incorrect!"),
 ];
 
 const validateMessage = [
@@ -91,16 +90,15 @@ function getLogInPage(req, res) {
 		{
 			title: "Speak-Ez",
 			subTitle: "Login",
-			messages: req.session.messages
+			messages: req.session.messages,
 		},
-		req.session.messages = undefined
+		(req.session.messages = undefined)
 	);
 }
 
 function getSignUp(req, res) {
 	res.render("sign-up", { title: "Speak-Ez", subTitle: "Sign Up" });
 }
-
 
 const postSignUp = [
 	validateUser,
@@ -123,7 +121,7 @@ const postSignUp = [
 				req.body.username,
 				hashedPassword
 			);
-			res.redirect("/login")
+			res.redirect("/login");
 		} catch (err) {
 			return next(err);
 		}
@@ -156,7 +154,7 @@ const postPassphrase = [
 	validatePassphrase,
 	async function (req, res, next) {
 		const errors = validationResult(req);
-        // console.log(req.body.passphrase)
+		// console.log(req.body.passphrase)
 		if (!errors.isEmpty()) {
 			return res.status(400).render("passphrase", {
 				title: "Speak-Ez",
@@ -165,13 +163,13 @@ const postPassphrase = [
 			});
 		}
 		try {
-            if(req.body.passphrase === MEMBER){
-                await query.makeMember(req.user.id);
-            }
-            if(req.body.passphrase === ADMIN){
-                await query.makeMember(req.user.id)
-                await query.makeAdmin(req.user.id)
-            }
+			if (req.body.passphrase === MEMBER) {
+				await query.makeMember(req.user.id);
+			}
+			if (req.body.passphrase === ADMIN) {
+				await query.makeMember(req.user.id);
+				await query.makeAdmin(req.user.id);
+			}
 			res.redirect("/");
 		} catch (error) {
 			return next(error);
@@ -210,9 +208,12 @@ const addPost = [
 	async function (req, res, next) {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
-			return res.status(400).render("add-post", {
+			const messages = await query.getAllMessages();
+			return res.status(400).render("message-board", {
 				title: "Speak-Ez",
-				subTitle: "Add Post",
+				subTitle: "Message Board",
+				messages: messages,
+				user: req.user,
 				errors: errors.array(),
 			});
 		}

@@ -18,8 +18,8 @@
 					<% if (user) { %>
 					<h2 class="greeting">Hello, <%= user.first_name %> !</h2>
 					<% } else { %>
-                    <h2 class="greeting">Join to add your post</h2>
-                   <% } %>
+					<h2 class="greeting">Join to add your post</h2>
+					<% } %>
 				</div>
 
 				<ul id="message-list">
@@ -28,21 +28,23 @@
 					user: user}) %> <% }) %>
 				</ul>
 			</div>
-
 			<% if(user) { %>
 			<form
 				action="/add"
 				method="POST"
-                class="add"
+				class="message-form"
 			>
-				<label for="message">Message:</label>
-				<textarea
-					name="message"
-					id="message"
-					cols="90"
-					rows="1"
-				></textarea>
-				<button type="submit">+</button>
+				<%- include("partials/errors.ejs") %>
+				<div class="add">
+					<label for="message">Message:</label>
+					<textarea
+						name="message"
+						id="message"
+						cols="90"
+						rows="1"
+					></textarea>
+					<button type="submit">+</button>
+				</div>
 			</form>
 			<% } %>
 		</div>

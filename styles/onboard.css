@@ -62,16 +62,6 @@ form{
     font-size: 1.1rem;
 }
 
-.login-btn,
-.sign-up-btn{
-    border-radius: 20px;
-    padding: 5px 15px;
-    font-size: .9rem;
-    box-shadow: 0 0 3px black;
-    border: none;
-    font-weight: bold;
-}
-
 ul, li{
     list-style: none;
     margin: 0;
@@ -105,4 +95,17 @@ input{
     display: flex;
     gap: 15px;
     align-items: center;
+}
+
+.buttons{
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: .9rem;
+    box-shadow: 0 0 3px black;
+    border: none;
+    font-weight: bold;
+}
+
+.skip{
+    align-self: center;
 }
