@@ -1,7 +1,7 @@
-<!-- <!DOCTYPE html> -->
+<!DOCTYPE html>
 <html>
 	<head>
-        <meta charset="UTF-8" />
+		<meta charset="UTF-8" />
 		<meta
 			name="viewport"
 			content="width=device-width, initial-scale=1.0"
@@ -9,32 +9,47 @@
 		<title><%= title %></title>
 		<link
 			rel="stylesheet"
-			href="/login.css"
+			href="/onboard.css"
 		/>
 	</head>
 	<body>
 		<%- include('partials/navbar.ejs', { title: title}) %>
-		<h2><%= subTitle %></h2>
-        <%- include("partials/messages.ejs") %>
+
 		<form
+			id="login"
 			action="/login"
 			method="POST"
 		>
-			<label for="username">Username</label>
-			<input
-				id="username"
-				name="username"
-				placeholder="username"
-				type="text"
-			/>
-			<label for="password">Password</label>
-			<input
-				id="password"
-				name="password"
-				type="password"
-			/>
-			<button type="submit">Log In</button>
+			<h2><%= subTitle %></h2>
+			<%- include("partials/messages.ejs") %>
+			<div class="inputs">
+				<div>
+					<!-- <label for="username">Username: </label> -->
+					<input
+						id="username"
+						name="username"
+						placeholder="username"
+						type="text"
+					/>
+				</div>
+				<div>
+					<!-- <label for="password">Password: </label> -->
+					<input
+						id="password"
+						name="password"
+						type="password"
+						placeholder="Password"
+					/>
+				</div>
+			</div>
+
+			<button
+				class="login-btn"
+				type="submit"
+			>
+				Log In
+			</button>
+			<p>Don't have an account? Sign Up <a href="/sign-up">Here.</a></p>
 		</form>
-		<p>Don't have an account? Sign Up <a href="/sign-up">Here.</a></p>
 	</body>
 </html>

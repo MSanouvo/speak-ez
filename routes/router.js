@@ -10,10 +10,8 @@ router.get("/sign-up", controller.getSignUp)
 router.post("/sign-up", controller.postSignUp)
 router.get("/passphrase", controller.getPassphrase)
 router.post("/passphrase", controller.postPassphrase)
-// router.get("/messages", controller.getMessages)
 router.get("/logout", controller.logout)
 router.post("/delete/:id", controller.deleteMessage)
-// router.get("/add", controller.addPostGet)
 router.post("/add", controller.addPost)
 
 module.exports = router

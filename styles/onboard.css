@@ -1,0 +1,108 @@
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.header>a{
+    text-decoration: none;
+    color: black;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+nav{
+    background-color: blue;
+    margin: 0;
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+p, form, h2{
+    padding: 0;
+    margin: 0;
+}
+
+form{
+    outline: 1px solid black;
+    padding: 20px;
+    width: 40vw;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 20px;
+    height: 60vh;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 3px black;
+    padding: 20px;
+}
+
+.placeholder{
+    color: transparent;
+}
+
+.error{
+    font-size: .9rem;
+    color: red;
+}
+
+.credentials{
+    display: flex;
+    gap: 10px;
+}
+
+.credentials>div>label{
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.login-btn,
+.sign-up-btn{
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: .9rem;
+    box-shadow: 0 0 3px black;
+    border: none;
+    font-weight: bold;
+}
+
+ul, li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+input{
+    resize: none;
+    border-radius: 20px;
+    padding: 5px 15px;
+    width: 90%;
+}
+
+#sign-up,
+#login{
+    height: 100%;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputs>div{
+    display: flex;
+    justify-content: center;
+}
+
+.passwords{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}

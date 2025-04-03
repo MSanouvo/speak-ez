@@ -90,7 +90,7 @@ function getLogInPage(req, res) {
 		"login",
 		{
 			title: "Speak-Ez",
-			subTitle: "Message Board",
+			subTitle: "Login",
 			messages: req.session.messages
 		},
 		req.session.messages = undefined
@@ -205,13 +205,6 @@ async function deleteMessage(req, res) {
 	res.redirect("/");
 }
 
-// function addPostGet(req, res) {
-// 	res.render("add-post", {
-// 		title: "Speak-Ez",
-// 		subTitle: "Add Post",
-// 	});
-// }
-
 const addPost = [
 	validateMessage,
 	async function (req, res, next) {
@@ -245,6 +238,5 @@ module.exports = {
 	getMessages,
 	logout,
 	deleteMessage,
-	// addPostGet,
 	addPost,
 };

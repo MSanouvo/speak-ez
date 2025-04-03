@@ -6,17 +6,6 @@ body{
     gap: 10px;
 }
 
-textarea{
-    resize: none;
-    border-radius: 50px;
-    padding: 5px 10px;
-}
-
-p, form{
-    padding: 0;
-    margin: 0;
-}
-
 .header>a{
     text-decoration: none;
     color: black;
@@ -85,10 +74,6 @@ nav{
     padding: 5px;
 }
 
-ul{
-    list-style: none;
-}
-
 .message-container{
     display: flex;
     /* outline: 2px solid black; */
@@ -149,4 +134,19 @@ ul{
 form>label{
     font-size: 1.2rem;
     font-weight: bold;
+}
+
+textarea{
+    resize: none;
+    border-radius: 50px;
+    padding: 5px 10px;
+}
+
+p, form{
+    padding: 0;
+    margin: 0;
+}
+
+ul{
+    list-style: none;
 }
