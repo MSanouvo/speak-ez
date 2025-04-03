@@ -1,26 +1,50 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html>
-    <head>
-        <title><%= subTitle %></title>
-        <link rel="stylesheet" href="/styles.css">
-    </head>
-    <body>
-        <h1><%= title %></h1>
-        <% if (user === undefined) { %>
-            <a href="/login"><button> Log In </button></a>
-            <a href="/sign-up"><button> Sign Up </button></a>
-       <% } %>
-       <% if (user) { %>
-            <h3>Hello, <%= user.first_name %> !</h3>
-        <% } %>
-        <ul id="message-list">
-            <% messages.forEach((message, index) => { %>
-                    <%- include('partials/posts', {message:message, index: index, user: user}) %>
-           <% }) %>
-        </ul>
-        <% if (user != undefined ) { %>
-            <a href="/add"><button> Add Post </button></a>
-            <a href="/logout"><button> Log Out </button></a>
-       <% } %>
-    </body>
+	<head>
+		<title><%= subTitle %></title>
+		<link
+			rel="stylesheet"
+			href="/message-board.css"
+		/>
+	</head>
+	<body>
+		<% if(user != undefined) { %> <%- include('partials/user-nav', { title:
+		title}) %> <% } else { %> <%- include('partials/non-user-nav', { title:
+		title, user: user }) %> <% } %>
+
+		<div id="container">
+			<div class="container-body">
+				<div class="greeting-container">
+					<% if (user) { %>
+					<h2 class="greeting">Hello, <%= user.first_name %> !</h2>
+					<% } else { %>
+                    <h2 class="greeting">Join to add your post</h2>
+                   <% } %>
+				</div>
+
+				<ul id="message-list">
+					<% messages.forEach((message, index) => { %> <%-
+					include('partials/posts', {message:message, index: index,
+					user: user}) %> <% }) %>
+				</ul>
+			</div>
+
+			<% if(user) { %>
+			<form
+				action="/add"
+				method="POST"
+                class="add"
+			>
+				<label for="message">Message:</label>
+				<textarea
+					name="message"
+					id="message"
+					cols="90"
+					rows="1"
+				></textarea>
+				<button type="submit">+</button>
+			</form>
+			<% } %>
+		</div>
+	</body>
 </html>

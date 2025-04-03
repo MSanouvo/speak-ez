@@ -1,0 +1,152 @@
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+textarea{
+    resize: none;
+    border-radius: 50px;
+    padding: 5px 10px;
+}
+
+p, form{
+    padding: 0;
+    margin: 0;
+}
+
+.header>a{
+    text-decoration: none;
+    color: black;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+nav{
+    background-color: blue;
+    margin: 0;
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#onboard{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.buttons{
+    border-radius: 20px;
+    padding: 5px 15px;
+    font-size: .9rem;
+    box-shadow: 0 0 3px black;
+    border: none;
+    font-weight: bold;
+}
+
+#onboard>a>button:hover{
+    background-color: pink;
+}
+
+#container{
+    outline: 1px solid black;
+    padding: 20px;
+    width: 60vw;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 20px;
+    height: 80vh;
+    background-color: whitesmoke;
+    box-shadow: 1px 1px 3px black;
+}
+
+.container-body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#message-list{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* outline: 1px solid red; */
+    padding: 0;
+    overflow-y: scroll;
+    max-height: 80%;
+    padding: 5px;
+}
+
+ul{
+    list-style: none;
+}
+
+.message-container{
+    display: flex;
+    /* outline: 2px solid black; */
+    border-radius: 20px;
+    background-color: white;
+    padding: 10px 20px;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 1px 1px 4px black;
+}
+
+.message{
+    font-size: 1.4rem;
+}
+
+.message-details{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    font-size: .9rem;
+}
+
+.author{
+    font-weight: bold;
+}
+
+.greeting-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.greeting{
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.message-content{
+    display: flex;
+    flex-direction: column;
+}
+
+.add{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.add>button{
+    border-radius: 100%;
+    font-weight: bold;
+    border: none;
+    background-color: rgba(0, 0, 255, 0.51);
+    padding: 5px 8px;
+    /* add svg for this */
+}
+
+form>label{
+    font-size: 1.2rem;
+    font-weight: bold;
+}

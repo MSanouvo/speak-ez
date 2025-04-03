@@ -1,15 +1,20 @@
-<li>
-	<div>
-		<span><%= message.message %></span>
+<li class="message-container">
+	<div class="message-content">
+		<div>
+			<p class="message"><%= message.message %></p>
+		</div>
+		<div>
+			<% if(user === undefined || user.ismember != true) { %>
+			<p>Anonymous</p>
+			<% } else { %>
+			<div class="message-details">
+				<p class="author"><%= message.author %></p>
+				<p><%= message.date_created %></p>
+			</div>
+			<% } %>
+		</div>
 	</div>
-	<div>
-        <% if(user === undefined || user.ismember != true) { %>
-            <p>Anonymous</p>
-       <% } else { %>
-            <p><%= message.author %></p>
-            <p><%= message.date_created %></p>
-       <% } %>
-
+	<div class="delete">
 		<% if (user != undefined && user.isadmin != false){ %>
 		<form
 			action="/delete/<%= message.id %>"
@@ -24,4 +29,5 @@
 		</form>
 		<% } %>
 	</div>
+	
 </li>

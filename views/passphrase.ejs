@@ -6,7 +6,7 @@
     <title><%= subTitle %></title>
 </head>
 <body>
-    <h1><%= title %></h1>
+    <%- include('partials/navbar.ejs', { title: title}) %>
     <%- include("partials/errors.ejs") %>
     <form action="/passphrase" method="POST">
         <label for="passphrase">What's the passphrase ?</label>

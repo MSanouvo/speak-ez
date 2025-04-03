@@ -205,12 +205,12 @@ async function deleteMessage(req, res) {
 	res.redirect("/");
 }
 
-function addPostGet(req, res) {
-	res.render("add-post", {
-		title: "Speak-Ez",
-		subTitle: "Add Post",
-	});
-}
+// function addPostGet(req, res) {
+// 	res.render("add-post", {
+// 		title: "Speak-Ez",
+// 		subTitle: "Add Post",
+// 	});
+// }
 
 const addPost = [
 	validateMessage,
@@ -245,6 +245,6 @@ module.exports = {
 	getMessages,
 	logout,
 	deleteMessage,
-	addPostGet,
+	// addPostGet,
 	addPost,
 };

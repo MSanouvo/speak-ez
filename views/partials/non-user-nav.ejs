@@ -1,0 +1,9 @@
+<nav class="header">
+    <a href="/"> <%= title %></a>
+    <div id="onboard">
+        <% if (user === undefined) { %>
+            <a href="/login"><button class="buttons"> Log In </button></a>
+            <a href="/sign-up"><button class="buttons"> Sign Up </button></a>
+       <% } %>
+    </div>
+</nav>
